@@ -1,7 +1,5 @@
 #pragma once
 
-#include <stdexcept>
-
 template<typename K, typename V>
 class RedBlackBST {
 private:
@@ -12,8 +10,8 @@ private:
         Node* left;
         Node* right;
         Color color;
-        int size;
-        Node(const K& key, const V& val, const Color& color, int size) :
+        unsigned int size;
+        Node(const K& key, const V& val, const Color& color, unsigned int size) :
                 key(key), value(val),
                 left(nullptr), right(nullptr),
                 color(color), size(size) {};
@@ -177,7 +175,7 @@ private:
     Node* rotateRight(Node* h) {
         Node* x = h->left;
         h->left = x->right;
-        h->right = h;
+        x->right = h;
         x->color = h->color;
         h->color = Color::RED;
         x->size = h->size;
@@ -235,6 +233,8 @@ private:
     }
 
     void flipColors(Node* h) {
+        if (h == nullptr)
+            return;
         h->color = Color::RED;
         h->left->color = Color::BLACK;
         h->right->color = Color::BLACK;

@@ -1,13 +1,13 @@
 #include <iostream>
-#include "BST.h"
 #include "TestRunner.h"
+#include "BST.h"
 
 void TestBST();
 
 int main() {
     {
         test::TestRunner tr;
-        tr.disable();
+        //tr.disable();
         RUN_TEST(tr, TestBST);
     }
     {
@@ -40,4 +40,15 @@ void TestBST() {
     tree.remove(1);
     tree.clear();
     ASSERT_EQ(tree.size(), 0);
+    for(int i = 0; i < 1000; ++i)
+        tree.insert(i, i);
+    for (int i = 3; i < 100; i+=5)
+        tree.remove(i);
+    for (int i = 0; i < 1000; ++i) {
+        if (tree.contains(i))
+            ASSERT_EQ(tree.get(i), i);
+    }
+    tree.clear();
+    ASSERT_EQ(tree.size(), 0);
+
 }

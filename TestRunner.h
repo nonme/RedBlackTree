@@ -1,10 +1,7 @@
 #pragma once
 
-#include <exception>
-#include <stdexcept>
 #include <sstream>
 #include <vector>
-#include <cstdlib>
 
 /*
 	Developed by Larin Dmytro
@@ -28,7 +25,7 @@
 }
 
 #define RUN_TEST(tr, func) {					\
-	tr.runTest(func, #func);					\
+	tr.runTest((func), #func);					\
 }
 
 namespace test {
@@ -92,14 +89,6 @@ namespace test {
             throw std::runtime_error(os.str());
         }
     }
-    template<typename T>
-    void __ASSERT_EQUALS__(const T& t, const int u, const std::string& msg) {
-        if (std::fabs(t - u) >= 0.0001) {
-            std::ostringstream os;
-            os << "Assertion failed! : " << t << " != " << u << std::endl << "(" << msg << ")";
-            throw std::runtime_error(os.str());
-        }
-    }
     void __ASSERT_EQUALS__(double a, double b, const std::string& msg) {
         if (abs(a - b) >= 0.0001) {
             std::ostringstream os;
@@ -112,7 +101,7 @@ namespace test {
         try {
             func();
         }
-        catch (std::exception e) {
+        catch (const std::exception& e) {
             return;
         }
         std::ostringstream os;
